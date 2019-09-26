@@ -11,6 +11,7 @@ public class CharacterController : MonoBehaviour
     public ChatBoxController chatbox;
     void Start()
     {
+        isJumping = false;
         speed = 5.0f;
         jump_force = 4.0f;
         animator = gameObject.GetComponentInChildren<Animator>();
@@ -19,7 +20,7 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Mathf.Abs(transform.position.x) > 8)
+        if (Mathf.Abs(transform.position.x) > 8)
         {
             chatbox.id = 1;
             chatbox.text.text = "Want to EXIT?";
@@ -56,7 +57,10 @@ public class CharacterController : MonoBehaviour
     {
         animator.SetInteger("Jump", 1);
         Debug.Log("jump");
-        GetComponent<Rigidbody2D>().velocity += (Vector2.up * jump_force);
+        if (!isJumping)
+        {
+            GetComponent<Rigidbody2D>().velocity += (Vector2.up * jump_force);
+        }
     }
 
     void OnCollisionEnter2D()
